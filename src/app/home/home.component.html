@@ -1,0 +1,98 @@
+<h2>
+  Products
+</h2>
+<md-button class="md-raised md-primary" (click)="currentProduct = {}; productsForm.show()">
+  <md-icon class="md-24" >add</md-icon>
+</md-button>
+<div class="row">
+<div class="col-lg-4 col-sm-12" *ngFor="let product of products">
+  <md-card >
+    <md-card-title-group>
+        <img md-card-sm-image src="{{product.imageUrl}}">
+        <md-card-title>{{product.productName}}</md-card-title>
+        <md-card-subtitle>{{product.price}}</md-card-subtitle>
+    </md-card-title-group>
+    <md-card-content>
+      <div class="description">{{product.description}}</div>
+    </md-card-content>
+     <md-card-actions layout="row" layout-align="end center">
+          <button md-mini-fab >
+            <md-icon class="md-24" (click)="currentProduct = product; productsForm.show()">mode_edit</md-icon>
+          </button>
+          <button md-mini-fab >
+            <md-icon class="md-24" (click)="currentProduct = product; productView.show()">search</md-icon>
+          </button>
+          <button md-mini-fab (click)="currentProduct = product; confirmDelete.show()">
+            <md-icon class="md-24">delete</md-icon>
+          </button>
+      </md-card-actions>
+  </md-card>
+</div>
+
+<md-dialog #confirmDelete (onClose)="confirmClose($event)">
+  <md-dialog-title>Are you sure?</md-dialog-title>
+  This will delete the product {{currentProduct.productName}}
+  <md-dialog-actions ok="Delete away" cancel="Whoops stop"></md-dialog-actions>
+</md-dialog>
+
+<md-dialog #productsForm (onClose)="addOrUpdateProduct($event)">
+  <form>
+    <md-card>
+      <md-card-title-group>
+          <md-card-title>Create a new product</md-card-title>
+      </md-card-title-group>
+      <md-card-content>
+        <md-input placeholder="Id" disabled
+          [(ngModel)]="currentProduct.id">
+        </md-input>
+        <md-input placeholder="Name"
+          [(ngModel)]="currentProduct.productName">
+        </md-input>
+        <md-input placeholder="Code"
+          [(ngModel)]="currentProduct.productCode">
+        </md-input>
+        <md-input placeholder="Release Date"
+          [(ngModel)]="currentProduct.releaseDate">
+        </md-input>
+        <md-input placeholder="Price"
+          [(ngModel)]="currentProduct.price">
+        </md-input>
+        <md-input placeholder="Description"
+          [(ngModel)]="currentProduct.description">
+        </md-input>
+        <md-input placeholder="Image Url"
+          [(ngModel)]="currentProduct.imageUrl">
+        </md-input>
+      </md-card-content>
+    </md-card>
+  </form>
+  <md-dialog-actions>
+    <button md-button (click)="productsForm.close(false)">
+      <span>Cancel</span>
+    </button>
+    <button md-button class="md-primary" (click)="productsForm.close(true)">
+      <span>Save</span>
+    </button>
+  </md-dialog-actions>
+</md-dialog>
+
+<md-dialog #productView>
+  <md-card>
+    <md-card-title-group>
+        <img md-card-md-image src="{{currentProduct.imageUrl}}">
+        <md-card-title>{{currentProduct.productName}}</md-card-title>
+        <md-card-subtitle>{{currentProduct.price}}</md-card-subtitle>
+    </md-card-title-group>
+    <md-card-content>
+      <div><strong>Id: </strong>{{currentProduct.id}}</div>
+      <div><strong>Code: </strong>{{currentProduct.productCode}}</div>
+      <div><strong>Release Date: </strong>{{currentProduct.releaseDate}}</div>
+      <div>{{currentProduct.description}}</div>
+    </md-card-content>
+  </md-card>
+  <md-dialog-actions>
+    <button md-button  class="md-primary" (click)="productView.close()">
+      <span>Close</span>
+    </button>
+  </md-dialog-actions>
+</md-dialog>
