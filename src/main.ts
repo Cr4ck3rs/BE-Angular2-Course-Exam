@@ -8,5 +8,5 @@ if (environment.production) {
   enableProdMode();
 }
 
-bootstrap(AppComponent,[APP_ROUTER_PROVIDERS,HTTP_PROVIDERS]);
+bootstrap(AppComponent, [APP_ROUTER_PROVIDERS, HTTP_PROVIDERS]);
 

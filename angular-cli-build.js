@@ -18,8 +18,8 @@ module.exports = function(defaults) {
       '@angular/**/*.+(js|js.map)',
       'moment/moment.js',
       'ng2-bootstrap/**/*.js',
-      'ng2-material/**/*.js',
-      '@angular2-material/**/*.js'
+      '@angular2-material/**/*.js',
+      'ng2-modal/**/*.js'
     ]
   });
 };

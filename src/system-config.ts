@@ -7,25 +7,11 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
-   '@angular2-material': 'vendor/@angular2-material',
-   'ng2-material': 'vendor/ng2-material'
+   '@angular2-material': 'vendor/@angular2-material'
 };
 
 /** User packages configuration. */
-const packages: any = {
-  'ng2-material': {
-    defaultExtension: 'js'
-  },
-  /*'ng2-material/components/dialog': {
-    format: 'cjs',
-    defaultExtension: 'js',
-    main: 'dialog.js'
-  },
-  'ng2-material/core/util/animate': {
-    format: 'cjs',
-    defaultExtension: 'js',
-    main: 'animate.js'
-  },*/
+const packages: any = {  
   '@angular2-material/core': {
     format: 'cjs',
     defaultExtension: 'js',
@@ -81,12 +67,13 @@ const barrels: string[] = [
   'app/shared',
   'app/home',
   'app/about',
+  'app/product',
   /** @cli-barrel */
 ];
 
 const cliSystemConfigPackages: any = {
-  'moment': {defaultExtension: 'js', main:'moment'},
-  'ng2-bootstrap': {defaultExtension: 'js', main:'ng2-bootstrap'}
+  'moment': {defaultExtension: 'js', main: 'moment'},
+  'ng2-bootstrap': {defaultExtension: 'js', main: 'ng2-bootstrap'}
 };
 barrels.forEach((barrelName: string) => {
   cliSystemConfigPackages[barrelName] = { main: 'index' };
@@ -102,7 +89,7 @@ System.config({
     'rxjs': 'vendor/rxjs',
     'main': 'main.js',
     'moment': 'vendor/moment',
-    'ng2-bootstrap': 'vendor/ng2-bootstrap',
+    'ng2-bootstrap': 'vendor/ng2-bootstrap'
   },
   packages: cliSystemConfigPackages
 });

@@ -1,45 +1,51 @@
 import { Component, OnInit } from '@angular/core';
-import {FORM_DIRECTIVES} from '@angular/common';
+//import { FORM_DIRECTIVES } from '@angular/common';
 import { Product, ProductService} from '../shared';
 import { MdCard, MD_CARD_DIRECTIVES  } from '@angular2-material/card';
 import { MdButton, MD_BUTTON_DIRECTIVES} from '@angular2-material/button';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
-import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
-import {MATERIAL_DIRECTIVES} from 'ng2-material';
+//import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
 import {OVERLAY_PROVIDERS} from '@angular2-material/core/overlay/overlay';
+//import {MODAL_DIRECTIVES, BS_VIEW_PROVIDERS} from 'ng2-bootstrap/ng2-bootstrap';
+//import {Modal} from "ng2-modal";
+//import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
   selector: 'app-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css'],
-  providers:[ProductService,MdIconRegistry,OVERLAY_PROVIDERS],
-  directives: [FORM_DIRECTIVES, MD_CARD_DIRECTIVES,MD_BUTTON_DIRECTIVES, MdIcon, MATERIAL_DIRECTIVES, MD_INPUT_DIRECTIVES]
+  providers:[ProductService, MdIconRegistry, OVERLAY_PROVIDERS],
+  //viewProviders:[BS_VIEW_PROVIDERS],
+  directives: [MD_CARD_DIRECTIVES, MD_BUTTON_DIRECTIVES, MdIcon] //, MD_INPUT_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, Modal, 
 })
+
 export class HomeComponent implements OnInit {
-  products:Product[];
+  products: Product[];
   currentProduct: Product;
-  errorMessage:string;
+  errorMessage: string;
   constructor(
-    private _productService:ProductService
-  ) {}
+    private _productService: ProductService
+  ) {} //, private router: Router
 
   ngOnInit() {
     this._productService.getProducts()
     .subscribe(
-      dataProducts=>this.products=dataProducts,
-      error=>this.errorMessage = <any>error
+      dataProducts => this.products = dataProducts,
+      error => this.errorMessage = <any>error
     );
   }
-
-  addOrUpdateProduct (saveEv: boolean) {
-    if(saveEv) {
-      if(this.currentProduct.id){
-        this.updateProduct(this.currentProduct.id, this.currentProduct);
-      } else {
-        this.currentProduct.id = this.products.length;
-        this.addProduct(this.currentProduct);
-      }
+/*
+  goToProductPage (id = 0) {
+    this.router.navigate(['/product-details', id]);
+  }
+*/
+  addOrUpdateProduct () {
+    if(this.currentProduct.id){
+      this.updateProduct(this.currentProduct.id, this.currentProduct);
+    } else {
+      this.currentProduct.id = this.products.length;
+      this.addProduct(this.currentProduct);
     }
   }
 
@@ -63,14 +69,15 @@ export class HomeComponent implements OnInit {
                       error => this.errorMessage = <any>error);
   }
 
-  confirmDeleteProduct (deleteEv: boolean) {
-    if(deleteEv){
-      this.deleteProduct(this.currentProduct.id);
+  confirmDeleteProduct () {
+    if ( window.confirm('Do you really want to delete the "' + this.currentProduct.productName + '" product?' ) )
+    {
+        this.deleteProduct(this.currentProduct.id);
     }
   }
 
   private deleteProduct (productId: number) {
-    if(productId <= 0) { return; }
+    if ( productId <= 0 ) { return; }
     this._productService.deleteProduct(productId)
                     .subscribe(
                       product => this.products.forEach((t, i) => {
@@ -82,3 +89,4 @@ export class HomeComponent implements OnInit {
   }
 
 }
+

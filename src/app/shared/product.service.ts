@@ -11,12 +11,18 @@ export class ProductService {
     private http:Http
   ) {}
 
-  private productsUrl="http://localhost:3000/products";
+  private productsUrl="http://localhost:3000/products/";
 
-  getProducts():Observable<Product[]>{
+  getProducts(): Observable<Product[]>{
     return this.http.get(this.productsUrl)
             .map(this.extractData)
             .catch(this.handleError);
+  }
+
+  getProduct(id: number): Observable<Product> {
+    return this.http.get(this.productsUrl + id)
+                    .map(this.extractData)
+                    .catch(this.handleError);
   }
 
   saveProduct(product: Product): Observable<Product> {
